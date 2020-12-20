@@ -6,7 +6,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import logo from './logo.svg';
 
 function App() {
-  const [displayText, setDisplayText] = useState('no data yet'); 
+  const [displayText, setDisplayText] = useState('no data yet');
   axios.get('/helloWorld')
     .then((response: AxiosResponse<string>) => {
       console.log(response);
