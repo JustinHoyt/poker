@@ -7,6 +7,6 @@ const corsHandler = cors({origin: true});
 // https://firebase.google.com/docs/functions/typescript
 export const helloWorld = functions.https.onRequest((request, response) => {
   corsHandler(request, response, () => {
-    response.send(`Ping from Firebase (with CORS handling)!`);
+    response.send('Ping from Firebase!');
   });
 });
