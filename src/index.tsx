@@ -1,9 +1,14 @@
+import './index.css';
+
+import App from './App';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import axios from 'axios';
 import reportWebVitals from './reportWebVitals';
 
+axios.defaults.baseURL = 'https://us-central1-simplepoker.cloudfunctions.net';
+axios.defaults.headers.common['Authorization'] = 'AUTH TOKEN';
+axios.defaults.headers.post['Content-Type'] = 'application/json';
 ReactDOM.render(
   <React.StrictMode>
     <App />
