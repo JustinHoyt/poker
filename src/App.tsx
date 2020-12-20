@@ -9,10 +9,10 @@ function App() {
   const [displayText, setDisplayText] = useState('no data yet');
   axios.get('/helloWorld')
     .then((response: AxiosResponse<string>) => {
-      console.log(response);
+      console.log(`this is my response: ${response}`);
       setDisplayText(response.data)
     })
-    .catch((error: AxiosError<string>)  => console.log(error))
+    .catch((error: AxiosError<string>)  => console.log(`this is my error: ${error}`))
 
   return (
     <div className="App">

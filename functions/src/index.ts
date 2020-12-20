@@ -1,14 +1,19 @@
-import * as cors from 'cors';
 import * as functions from 'firebase-functions';
-const corsHandler = cors({origin: true});
-
 
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
-
 export const helloWorld = functions.https.onRequest((request, response) => {
-  corsHandler(request, response, () => {
-    functions.logger.info("Hello logs!", {structuredData: true});
-    response.send("Hello from Firebase!");
-  });
+  response.set('Access-Control-Allow-Origin', '*');
+
+  if (request.method === 'OPTIONS') {
+    response.set('Access-Control-Allow-Methods', 'GET');
+    response.set('Access-Control-Allow-Headers', 'Content-Type');
+    response.set('Access-Control-Max-Age', '3600');
+    response.status(204).send('');
+  } else {
+    response.send('Hello World!');
+  }
+
+  functions.logger.info("Hello logs!", {structuredData: true});
+  response.send("Hello from Firebase!");
 });
