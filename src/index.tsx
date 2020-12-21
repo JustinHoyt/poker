@@ -10,6 +10,10 @@ axios.defaults.baseURL = 'https://us-central1-simplepoker.cloudfunctions.net';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 ReactDOM.render(
   <React.StrictMode>
+    <script src="/__/firebase/8.2.1/firebase-app.js"></script>
+    <script src="/__/firebase/8.2.1/firebase-analytics.js"></script>
+    <script src="/__/firebase/8.2.1/firebase-firestore.js"></script>
+    <script src="/__/firebase/init.js"></script>
     <App />
   </React.StrictMode>,
   document.getElementById('root')
