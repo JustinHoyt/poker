@@ -3,9 +3,7 @@ import './App.css';
 import React, { useState } from 'react';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
-import Deck from 'react-poker';
 import { db } from './firebase';
-import logo from './logo.svg';
 
 function App() {
   const [displayText, setDisplayText] = useState('no data yet');
