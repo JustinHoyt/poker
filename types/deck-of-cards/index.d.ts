@@ -1,0 +1,1 @@
+declare module 'deck-of-cards'

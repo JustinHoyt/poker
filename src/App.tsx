@@ -28,8 +28,6 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Deck/>
-
         <p>
         {displayText}
         </p>
