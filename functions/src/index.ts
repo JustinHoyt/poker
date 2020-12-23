@@ -10,3 +10,9 @@ export const helloWorld = functions.https.onRequest((request, response) => {
     response.send('Ping from Firebase!');
   });
 });
+
+export const updateUserAction = functions.https.onRequest((request, response) => {
+  corsHandler(request, response, () => {
+    response.send('Ping from Firebase!');
+  });
+});
