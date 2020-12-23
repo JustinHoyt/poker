@@ -1,18 +1,21 @@
 import * as cors from 'cors';
 import * as functions from 'firebase-functions';
 
+import { db } from './firebase';
+
 const corsHandler = cors({origin: true});
 
-// Start writing Firebase Functions
-// https://firebase.google.com/docs/functions/typescript
-export const helloWorld = functions.https.onRequest((request, response) => {
-  corsHandler(request, response, () => {
-    response.send('Ping from Firebase!');
-  });
-});
+interface UpdateBettorRequest extends functions.https.Request {
+  userId?: string;
+  action?: string;
+}
 
-export const updateUserAction = functions.https.onRequest((request, response) => {
+export const updateBettorAction = functions.https.onRequest((request: UpdateBettorRequest, response) => {
   corsHandler(request, response, () => {
-    response.send('Ping from Firebase!');
+    const body = JSON.parse(request.body);
+    db.collection('rooms').doc('1').update({
+      [`users.${body.userId}.action`]: body.action
+    });
+    response.send(JSON.parse(request.body));
   });
 });

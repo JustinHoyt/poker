@@ -14,21 +14,24 @@ function App() {
     .catch((error: AxiosError<string>)  => console.log(`this is my error: ${error}`))
 
   db.collection('rooms').doc('1').set({
-    users: [{
-      id: '1214142414',
-      name: 'nick',
-      stack: 100,
-      action: '30',
-      cards: ['10s', '8d'],
-      seat: 1,
-    }, {
-      id: '1248794817',
-      name: 'justin',
-      stack: 50,
-      action: 'fold',
-      cards: ['Ks', 'Qd'],
-      seat: 0,
-    }],
+    users: {
+      0: {
+        id: '1214142414',
+        name: 'nick',
+        stack: 100,
+        action: '30',
+        cards: ['10s', '8d'],
+        seat: 1,
+      },
+      1: {
+        id: '1248794817',
+        name: 'justin',
+        stack: 50,
+        action: 'fold',
+        cards: ['Ks', 'Qd'],
+        seat: 0,
+      }
+    },
     pot: "100",
     board: ['Ks', 'As', '4c'],
     button: 0,
