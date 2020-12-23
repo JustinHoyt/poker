@@ -48,7 +48,7 @@ function App() {
 
 
   const defHandStyle = {
-    maxHeight:'20h',
+    maxHeight:'20vh',
     padding: 0,
   };
 
