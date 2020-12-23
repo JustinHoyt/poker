@@ -1,9 +1,9 @@
 import './App.css';
 
-import React, { useState } from 'react';
+import { Card, CardBack, Hand } from 'react-deck-o-cards';
 import axios, { AxiosError, AxiosResponse } from 'axios';
+import { useEffect, useState } from 'react';
 
-import Deck from './Deck';
 import { db } from './firebase';
 import { uuid as uuidv4 } from 'uuid';
 
@@ -46,10 +46,20 @@ function App() {
       console.error("Error writing document: ", error);
   });
 
+
+  const defHandStyle = {
+    maxHeight:'20h',
+    padding: 0,
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <Deck/>
+        <Hand cards={[
+          { rank: 1, suit: 0 },
+          { rank: 11, suit: 2 },
+          ]} hidden={false} style={defHandStyle}
+        />
         <p>
         {displayText}
         </p>
