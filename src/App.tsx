@@ -7,8 +7,13 @@ import { useEffect, useState } from 'react';
 import { db } from './firebase';
 import { uuid as uuidv4 } from 'uuid';
 
+import { deck52 } from './constants';
+import Board from './components/Board';
+
 function App() {
   const [displayText, setDisplayText] = useState('no data yet');
+  const [room, setRoom] = useState({users: {0:{}}, pot: 0, board:[{}], deck: deck52})
+
   axios.get('/helloWorld')
     .then((response: AxiosResponse<string>) => setDisplayText(response.data))
     .catch((error: AxiosError<string>)  => console.log(`this is my error: ${error}`))
@@ -52,18 +57,26 @@ function App() {
     padding: 0,
   };
 
+  const dealCard = (position) => {
+    if (position === 'board') {
+      setRoom({...room, board: [...room.board, room.deck[0]], deck: [...room.deck].slice(1)});
+    } else {
+      setRoom({
+        ...room, 
+        users:{
+          ...room.users, 
+          [position]: {...room.users[position], cards: [...room.users[position].cards, {rank: 1, suit: 1}]}
+        }, 
+        deck: [...room.deck].slice(1)});
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <Hand cards={[
-          { rank: 1, suit: 0 },
-          { rank: 11, suit: 2 },
-          ]} hidden={false} style={defHandStyle}
-        />
-        <p>
+      <p>
         {displayText}
-        </p>
-      </header>
+      </p>
+      <Board boardCards={room.board} dealCard={dealCard}/>
     </div>
   );
 }
