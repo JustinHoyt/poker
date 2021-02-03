@@ -9,47 +9,51 @@ import { uuid as uuidv4 } from 'uuid';
 
 import { deck52 } from './constants';
 import Board from './components/Board';
+import Seat from './components/Seat';
 
 function App() {
   const [displayText, setDisplayText] = useState('no data yet');
-  const [room, setRoom] = useState({users: {0:{}}, pot: 0, board:[{}], deck: deck52})
+  const [room, setRoom] = useState({users: {0:{cards:[]}}, pot: 0, board:[{}], deck: deck52})
 
-  axios.get('/helloWorld')
-    .then((response: AxiosResponse<string>) => setDisplayText(response.data))
-    .catch((error: AxiosError<string>)  => console.log(`this is my error: ${error}`))
+  // useEffect( () => {
+  // axios.get('/helloWorld')
+  //   .then((response: AxiosResponse<string>) => setDisplayText(response.data))
+  //   .catch((error: AxiosError<string>)  => console.log(`this is my error: ${error}`)) 
+  // })
 
-  db.collection('rooms').doc('1').set({
-    users: {
-      0: {
-        id: '1214142414',
-        name: 'nick',
-        stack: 100,
-        action: '30',
-        cards: ['10s', '8d'],
-        seat: 1,
-      },
-      1: {
-        id: '1248794817',
-        name: 'justin',
-        stack: 50,
-        action: 'fold',
-        cards: ['Ks', 'Qd'],
-        seat: 0,
-      }
-    },
-    pot: "100",
-    board: ['Ks', 'As', '4c'],
-    button: 0,
-    blindSize: .02,
-    buyIn: 10,
-    actor: 0,
-  })
-  .then(function() {
-    console.log("Document successfully written!");
-  })
-  .catch(function(error) {
-      console.error("Error writing document: ", error);
-  });
+  // db.collection('rooms').doc('1').set({
+  //   users: {
+  //     0: {
+  //       id: '1214142414',
+  //       name: 'nick',
+  //       stack: 100,
+  //       action: '30',
+  //       cards: ['10s', '8d'],
+  //       seat: 1,
+  //     },
+  //     1: {
+  //       id: '1248794817',
+  //       name: 'justin',
+  //       stack: 50,
+  //       action: 'fold',
+  //       cards: ['Ks', 'Qd'],
+  //       seat: 0,
+  //     }
+  //   },
+  //   pot: "100",
+  //   board: ['Ks', 'As', '4c'],
+  //   button: 0,
+  //   blindSize: .02,
+  //   buyIn: 10,
+  //   actor: 0,
+  // })
+  // .then(function(res) {
+  //   console.log("Document successfully written!")
+  //   console.log(res);
+  // })
+  // .catch(function(error) {
+  //     console.error("Error writing document: ", error);
+  // });
 
 
   const defHandStyle = {
@@ -65,8 +69,7 @@ function App() {
         ...room, 
         users:{
           ...room.users, 
-          [position]: {...room.users[position], cards: [...room.users[position].cards, {rank: 1, suit: 1}]}
-        }, 
+          [position]: {...room.users[position], cards: [...room.users[position].cards, room.deck[0]]}}, 
         deck: [...room.deck].slice(1)});
     }
   };
@@ -76,7 +79,8 @@ function App() {
       <p>
         {displayText}
       </p>
-      <Board boardCards={room.board} dealCard={dealCard}/>
+      <Board boardCards={room.board} dealCard={() => dealCard('board')}/>
+      <Seat hand={room.users[0].cards} dealCard={() => dealCard(0)} />
     </div>
   );
 }
