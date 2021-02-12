@@ -59,4 +59,33 @@ const defHandStyle = {
     padding: 0,
   };
 
-export { deck52, defHandStyle };
+const dummyState = { 
+  users: {
+    0: {
+      id: '1214142414',
+      name: 'nick',
+      stack: 100,
+      action: '30',
+      cards: [{rank: 2, suit: 0},{rank: 7, suit: 3}],
+      seat: 1,
+    },
+    1: {
+      id: '1248794817',
+      name: 'justin',
+      stack: 50,
+      action: 'fold',
+      cards: [{rank: 12, suit: 3}, {rank: 12, suit: 1}],
+      seat: 0,
+    }
+  },
+  pot: "100",
+  board: [{rank: 13, suit: 3}, {rank: 1, suit: 2}, {rank: 7, suit: 2}],
+  button: 0,
+  blindSize: .02,
+  buyIn: 10,
+  actor: 0,
+  deck: deck52
+};
+
+
+export { deck52, defHandStyle, dummyState };

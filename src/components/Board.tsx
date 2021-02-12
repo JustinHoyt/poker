@@ -4,10 +4,11 @@ import { Card, Cardback, Hand } from 'react-deck-o-cards';
 import { defHandStyle } from '../constants';
 
 const Board = (props) => {
-    const { boardCards, dealCard } = props;
+    const { boardCards, dealCard, pot } = props;
     return(
         <div>
             <Hand cards={boardCards} hidden={false} style={defHandStyle} />
+            <p>Pot: {pot}</p>
             <button onClick={dealCard}>DEAL</button>
         </div>
     )
