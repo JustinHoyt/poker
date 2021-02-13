@@ -66,11 +66,13 @@ useEffect( () => {
       .then(() => console.log('board updated'))
       .catch((err) => console.log(err));
     } else {
-      setRoom({
-        ...room, 
-        users:{...room.users, [position]: {...room.users[position], cards: [...room.users[position].cards, room.deck[0]]}},
-        deck: [...room.deck].slice(1)
+      let playerHand = `users.${position}.cards`
+      return docRef.update({
+        [playerHand]: firebase.firestore.FieldValue.arrayUnion(room.deck[0]),
+        deck: firebase.firestore.FieldValue.arrayRemove(room.deck[0])
       })
+      .then(() => console.log('player updated:', room.users[0]))
+      .catch((err) => console.log(err));
     }
   };
 

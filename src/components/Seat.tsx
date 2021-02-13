@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 const Chair = styled.div`
     border: 10px solid black;
-    width: 200px;
+    width: 2000px;
     margin: 10px;
 `;
 
