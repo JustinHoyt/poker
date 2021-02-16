@@ -26,14 +26,8 @@ const PlayArea = styled.div`
 const docRef = db.collection('rooms').doc('1')
 
 function App() {
-  const [displayText, setDisplayText] = useState('no data yet');
   const [room, setRoom] = useState(dummyState)
 
-//   useEffect( () => {
-//   axios.get('/helloWorld')
-//     .then((response: AxiosResponse<string>) => setDisplayText(response.data))
-//     .catch((error: AxiosError<string>)  => console.log(`this is my error: ${error}`)) 
-//   })
 useEffect( () => {
   docRef.onSnapshot((doc) => {
     if(doc.exists) {
@@ -58,7 +52,6 @@ useEffect( () => {
 
   const dealCard = (position) => {
     if (position === 'board') {
-      //setRoom({...room, board: [...room.board, room.deck[0]], deck: [...room.deck].slice(1)});
       return docRef.update({
         board: firebase.firestore.FieldValue.arrayUnion(room.deck[0]),
         deck: firebase.firestore.FieldValue.arrayRemove(room.deck[0])
@@ -76,11 +69,28 @@ useEffect( () => {
     }
   };
 
+  const clearHand = (position) => {
+    let playerHand = `users.${position}.cards`
+    return docRef.update({
+      [playerHand]: []
+    });
+  };
+
+  const clearCards = () => {
+    
+    return docRef.update({
+      board: [],
+      deck: deck52
+    })
+    .then(() => console.log('board cleared'))
+    .catch(err => console.log(err));
+  };
+
   return (
     <div className="App">
-      <Board boardCards={room.board} dealCard={() => dealCard('board')} pot={room.pot} />
+      <Board boardCards={room.board} clearCards = {clearCards} dealCard={() => dealCard('board')} pot={room.pot} />
       <PlayArea>
-        {Object.keys(room.users).map(key => <Seat hand={room.users[key].cards} dealCard={() => dealCard(key)} player={room.users[key]} />)}
+        {Object.keys(room.users).map(key => <Seat hand={room.users[key].cards} dealCard={() => dealCard(key)} clearHand={() => clearHand(key)} player={room.users[key]} />)}
         {[...Array(9 - Object.keys(room.users).length)].map( () => <EmptySeat />)}
       </PlayArea>
     </div>

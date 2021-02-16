@@ -6,13 +6,13 @@ import styled from 'styled-components';
 
 const Chair = styled.div`
     border: 10px solid black;
-    width: 2000px;
+    width: 200px;
     margin: 10px;
 `;
 
 const Seat = (props) => {
 
-    const { hand, dealCard, player } = props;
+    const { hand, dealCard, player, clearHand } = props;
 
     return(
         <Chair>
@@ -20,6 +20,7 @@ const Seat = (props) => {
             <p>{player.name}</p>
             <p>Stack: {player.stack}</p>
             <button onClick={dealCard}>DEAL</button>
+            <button onClick={clearHand}>Clear</button>
         </Chair>
     )
 };
